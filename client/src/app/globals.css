@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .bg-radial-gradient-left {
+    background-image: radial-gradient(
+      farthest-side at 100% 50%,
+      #ff000000,
+      #ff000000,
+      #ff000000,
+      #ff000000,
+      #ff000000,
+      #ff000000,
+      #ff000000,
+      #a1a1aa
+    );
+  }
+  .bg-radial-gradient-right {
+    background-image: radial-gradient(
+      farthest-side at 0% 50%,
+      #ff000000,
+      #ff000000,
+      #ff000000,
+      #ff000000,
+      #ff000000,
+      #ff000000,
+      #ff000000,
+      #a1a1aa
+    );
+  }
+}
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 241, 238, 255;
+  --background-end-rgb: 255, 255, 255;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 1px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #505050;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px #64046d;
+  border-radius: 10px;
+}
+
+body {
+  color: #513f54;
+  background: #a1a1aa;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.ql-align-center {
+  @apply text-center;
+}
+
+.ql-align-right {
+  @apply text-right;
+}
+
+.ql-align-left {
+  @apply text-left;
+}
+
+.ql-align-justify {
+  @apply text-justify;
+}
+
+/*b8b8b8  513f54*/
