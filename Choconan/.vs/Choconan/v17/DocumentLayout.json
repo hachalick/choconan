@@ -1,0 +1,70 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\programmin\\web\\choconan\\Choconan\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E1F0869C-0E46-4C98-8AF3-2D21EC9931C0}|StartUp\\StartUp.csproj|D:\\programmin\\web\\choconan\\Choconan\\startup\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1F0869C-0E46-4C98-8AF3-2D21EC9931C0}|StartUp\\StartUp.csproj|solutionrelative:startup\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1F0869C-0E46-4C98-8AF3-2D21EC9931C0}|StartUp\\StartUp.csproj|D:\\programmin\\web\\choconan\\Choconan\\startup\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1F0869C-0E46-4C98-8AF3-2D21EC9931C0}|StartUp\\StartUp.csproj|solutionrelative:startup\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1F0869C-0E46-4C98-8AF3-2D21EC9931C0}|StartUp\\StartUp.csproj|d:\\programmin\\web\\choconan\\choconan\\startup\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{E1F0869C-0E46-4C98-8AF3-2D21EC9931C0}|StartUp\\StartUp.csproj|solutionrelative:startup\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Form1.Designer.cs",
+              "DocumentMoniker": "D:\\programmin\\web\\choconan\\Choconan\\StartUp\\Form1.Designer.cs",
+              "RelativeDocumentMoniker": "StartUp\\Form1.Designer.cs",
+              "ToolTip": "D:\\programmin\\web\\choconan\\Choconan\\StartUp\\Form1.Designer.cs",
+              "RelativeToolTip": "StartUp\\Form1.Designer.cs",
+              "ViewState": "AQIAADAAAAAAAAAAAAAowCYAAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-08T09:15:33.78Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "D:\\programmin\\web\\choconan\\Choconan\\StartUp\\Form1.cs",
+              "RelativeDocumentMoniker": "StartUp\\Form1.cs",
+              "ToolTip": "D:\\programmin\\web\\choconan\\Choconan\\StartUp\\Form1.cs",
+              "RelativeToolTip": "StartUp\\Form1.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB0AAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-08T09:15:22.582Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Form1.cs [Design]",
+              "DocumentMoniker": "D:\\programmin\\web\\choconan\\Choconan\\StartUp\\Form1.cs",
+              "RelativeDocumentMoniker": "StartUp\\Form1.cs",
+              "ToolTip": "D:\\programmin\\web\\choconan\\Choconan\\StartUp\\Form1.cs [Design]",
+              "RelativeToolTip": "StartUp\\Form1.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-08T08:52:11.717Z",
+              "EditorCaption": " [Design]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
