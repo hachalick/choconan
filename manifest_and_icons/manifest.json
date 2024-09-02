@@ -1,0 +1,50 @@
+{
+    "theme_color": "#aa9bc0",
+    "background_color": "#cccccc",
+    "icons": [
+        {
+            "purpose": "maskable",
+            "sizes": "192x192",
+            "src": "icon192_maskable.png",
+            "type": "image/png"
+        },
+        {
+            "purpose": "any",
+            "sizes": "192x192",
+            "src": "icon192_rounded.png",
+            "type": "image/png"
+        },
+        {
+            "purpose": "maskable",
+            "sizes": "384x384",
+            "src": "icon384_maskable.png",
+            "type": "image/png"
+        },
+        {
+            "purpose": "any",
+            "sizes": "384x384",
+            "src": "icon384_rounded.png",
+            "type": "image/png"
+        },
+        {
+            "purpose": "maskable",
+            "sizes": "512x512",
+            "src": "icon512_maskable.png",
+            "type": "image/png"
+        },
+        {
+            "purpose": "any",
+            "sizes": "512x512",
+            "src": "icon512_rounded.png",
+            "type": "image/png"
+        }
+    ],
+    "orientation": "portrait",
+    "display": "standalone",
+    "dir": "auto",
+    "lang": "fa-IR",
+    "name": "choconan",
+    "short_name": "choconan",
+    "description": "web application choconan",
+    "start_url": "https://choconan.ir/"
+}
