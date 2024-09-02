@@ -1,0 +1,10 @@
+D:\programmin\web\choconan\Choconan\StartUp\bin\Debug\StartUp.exe.config
+D:\programmin\web\choconan\Choconan\StartUp\bin\Debug\StartUp.exe
+D:\programmin\web\choconan\Choconan\StartUp\bin\Debug\StartUp.pdb
+D:\programmin\web\choconan\Choconan\StartUp\obj\Debug\StartUp.csproj.AssemblyReference.cache
+D:\programmin\web\choconan\Choconan\StartUp\obj\Debug\StartUp.Properties.Resources.resources
+D:\programmin\web\choconan\Choconan\StartUp\obj\Debug\StartUp.csproj.GenerateResource.cache
+D:\programmin\web\choconan\Choconan\StartUp\obj\Debug\StartUp.csproj.CoreCompileInputs.cache
+D:\programmin\web\choconan\Choconan\StartUp\obj\Debug\StartUp.exe
+D:\programmin\web\choconan\Choconan\StartUp\obj\Debug\StartUp.pdb
+D:\programmin\web\choconan\Choconan\StartUp\obj\Debug\StartUp.FormStartUp.resources
