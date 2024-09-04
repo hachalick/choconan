@@ -1,5 +1,5 @@
 import { Column, Entity, Generated, OneToMany, PrimaryColumn } from "typeorm";
-import { FactorPresentOrderEntity } from "./factor-present-order.entity";
+import { FactorPresentOrderEntity } from "./Factor-Present-Order.entity";
 
 @Entity()
 export class PresentOrderTableEntity {
