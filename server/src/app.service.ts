@@ -1,8 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {
-  readFile as readFileExcel,
-  utils as utilsExcel,
-} from 'xlsx';
+import { readFile as readFileExcel, utils as utilsExcel } from 'xlsx';
 import { allCategoryVideos } from './modules/constants/videos';
 
 @Injectable()
