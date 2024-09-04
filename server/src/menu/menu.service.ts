@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { FactorPresentOrderEntity } from './../modules/entity/mysql/factor-present-order.entity';
-import { CategoryProductMenuEntity } from './../modules/entity/mysql/category-product.entity';
-import { ProductMenuEntity } from './../modules/entity/mysql/product.entity';
+import { FactorPresentOrderEntity } from '../modules/entity/mysql/Factor-Present-Order.entity';
+import { CategoryProductMenuEntity } from '../modules/entity/mysql/Category-Product.entity';
+import { ProductMenuEntity } from '../modules/entity/mysql/Product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { utils as utilsExcel, read as readExcel } from 'xlsx';
