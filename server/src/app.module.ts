@@ -1,5 +1,5 @@
 import { MiddlewareConsumer, Module } from '@nestjs/common';
-import { TypeOrmDbConfig } from "./modules/config/typeorm.config";
+import { TypeOrmDbConfig } from './modules/config/typeorm.config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CustomConfigsModule } from './modules/config/configs.module';
@@ -9,7 +9,6 @@ import { MenuModule } from './menu/menu.module';
 import { BlogModule } from './blog/blog.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
-import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -18,10 +17,10 @@ import { AuthModule } from './auth/auth.module';
       inject: [CustomConfigsModule],
     }),
     CustomConfigsModule,
+    AuthModule,
     BlogModule,
     OrderModule,
     MenuModule,
-    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
