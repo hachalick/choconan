@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { FactorPresentOrderEntity } from './../modules/entity/mysql/factor-present-order.entity';
-import { PresentOrderTableEntity } from './../modules/entity/mysql/present-order-table.entity';
-import { ProductMenuEntity } from './../modules/entity/mysql/product.entity';
+import { FactorPresentOrderEntity } from '../modules/entity/mysql/Factor-Present-Order.entity';
+import { PresentOrderTableEntity } from '../modules/entity/mysql/Present-Order-Table.entity';
+import { ProductMenuEntity } from '../modules/entity/mysql/Product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Not, Repository } from 'typeorm';
 
