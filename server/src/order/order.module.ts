@@ -5,9 +5,9 @@ import { SocketOrderModule } from 'src/socket_order/socket_order.module';
 import { SocketOrderGateway } from 'src/socket_order/socket_order.gateway';
 import { MenuModule } from 'src/menu/menu.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ProductMenuEntity } from 'src/modules/entity/mysql/product.entity';
-import { PresentOrderTableEntity } from 'src/modules/entity/mysql/present-order-table.entity';
-import { FactorPresentOrderEntity } from 'src/modules/entity/mysql/factor-present-order.entity';
+import { ProductMenuEntity } from 'src/modules/entity/mysql/Product.entity';
+import { PresentOrderTableEntity } from 'src/modules/entity/mysql/Present-Order-Table.entity';
+import { FactorPresentOrderEntity } from 'src/modules/entity/mysql/Factor-Present-Order.entity';
 
 @Module({
   imports: [
