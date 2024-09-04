@@ -6,8 +6,8 @@ import {
   OneToMany,
   PrimaryColumn,
 } from 'typeorm';
-import { PresentOrderTableEntity } from './present-order-table.entity';
-import { ProductMenuEntity } from './product.entity';
+import { PresentOrderTableEntity } from './Present-Order-Table.entity';
+import { ProductMenuEntity } from './Product.entity';
 
 @Entity()
 export class FactorPresentOrderEntity {
