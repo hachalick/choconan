@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { MenuController } from './menu.controller';
 import { MenuService } from './menu.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CategoryProductMenuEntity } from 'src/modules/entity/mysql/category-product.entity';
-import { ProductMenuEntity } from 'src/modules/entity/mysql/product.entity';
+import { CategoryProductMenuEntity } from 'src/modules/entity/mysql/Category-Product.entity';
+import { ProductMenuEntity } from 'src/modules/entity/mysql/Product.entity';
 
 @Module({
   imports: [
