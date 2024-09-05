@@ -15,64 +15,6 @@ export class MenuService {
     private readonly productMenuRepository: Repository<ProductMenuEntity>,
   ) {}
 
-  async uploadFileExcel({ file }: { file: Express.Multer.File }) {
-    const allMenu: TCategoriesMenu = [];
-    const workbook = readExcel(file.buffer, { type: 'buffer' });
-    const sheet_name_list = workbook.SheetNames;
-    for (let i = 0; i < sheet_name_list.length; i++) {
-      const data: TProductsMenu = utilsExcel.sheet_to_json(
-        workbook.Sheets[sheet_name_list[i]],
-        {
-          blankrows: true,
-          defval: null,
-        },
-      );
-      allMenu.push({
-        category: sheet_name_list[i],
-        icon: '/default.jpg',
-        products: data,
-      });
-    }
-    const pastCategory = await this.categoryProductMenuRepository.find();
-    for (let i in pastCategory) {
-      await this.categoryProductMenuRepository.delete({
-        category_product_id: pastCategory[i].category_product_id,
-      });
-    }
-    for (let i in allMenu) {
-      const { category_id } = await this.addCategoryMenu({
-        category: allMenu[i].category,
-        icon: allMenu[i].icon,
-      });
-      for (let j in allMenu[i].products) {
-        const {
-          available,
-          description,
-          id,
-          meta_description,
-          meta_title,
-          name,
-          price,
-          src,
-          waiting,
-        } = allMenu[i].products[j];
-        await this.addProductMenu({
-          available,
-          description,
-          id,
-          meta_description,
-          meta_title,
-          name,
-          category_id,
-          price,
-          src,
-          waiting,
-        });
-      }
-    }
-    return { change: true };
-  }
-
   async getAllMenu() {
     return await this.categoryProductMenuRepository.find({
       relations: { products: true },
@@ -179,6 +121,64 @@ export class MenuService {
     }
     listSearch.sort((a, b) => b.rank - a.rank);
     return listSearch;
+  }
+
+  async uploadFileExcel({ file }: { file: Express.Multer.File }) {
+    const allMenu: TCategoriesMenu = [];
+    const workbook = readExcel(file.buffer, { type: 'buffer' });
+    const sheet_name_list = workbook.SheetNames;
+    for (let i = 0; i < sheet_name_list.length; i++) {
+      const data: TProductsMenu = utilsExcel.sheet_to_json(
+        workbook.Sheets[sheet_name_list[i]],
+        {
+          blankrows: true,
+          defval: null,
+        },
+      );
+      allMenu.push({
+        category: sheet_name_list[i],
+        icon: '/default.jpg',
+        products: data,
+      });
+    }
+    const pastCategory = await this.categoryProductMenuRepository.find();
+    for (let i in pastCategory) {
+      await this.categoryProductMenuRepository.delete({
+        category_product_id: pastCategory[i].category_product_id,
+      });
+    }
+    for (let i in allMenu) {
+      const { category_id } = await this.addCategoryMenu({
+        category: allMenu[i].category,
+        icon: allMenu[i].icon,
+      });
+      for (let j in allMenu[i].products) {
+        const {
+          available,
+          description,
+          id,
+          meta_description,
+          meta_title,
+          name,
+          price,
+          src,
+          waiting,
+        } = allMenu[i].products[j];
+        await this.addProductMenu({
+          available,
+          description,
+          id,
+          meta_description,
+          meta_title,
+          name,
+          category_id,
+          price,
+          src,
+          waiting,
+        });
+      }
+    }
+    return { change: true };
   }
 
   async addCategoryMenu({
@@ -288,5 +288,4 @@ export class MenuService {
     });
     return { delete: true };
   }
-
 }
