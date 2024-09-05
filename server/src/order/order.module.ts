@@ -8,6 +8,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductMenuEntity } from 'src/modules/entity/mysql/Product.entity';
 import { PresentOrderTableEntity } from 'src/modules/entity/mysql/Present-Order-Table.entity';
 import { FactorPresentOrderEntity } from 'src/modules/entity/mysql/Factor-Present-Order.entity';
+import { JwtModule } from 'src/modules/jwt/jwt.module';
+import { UserEntity } from 'src/modules/entity/mysql/User.entity';
 
 @Module({
   imports: [
@@ -15,8 +17,10 @@ import { FactorPresentOrderEntity } from 'src/modules/entity/mysql/Factor-Presen
       PresentOrderTableEntity,
       ProductMenuEntity,
       FactorPresentOrderEntity,
+      UserEntity,
     ]),
     SocketOrderModule,
+    JwtModule,
   ],
   controllers: [OrderController],
   providers: [OrderService, SocketOrderGateway],
