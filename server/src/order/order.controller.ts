@@ -7,11 +7,17 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  Query,
+  UseGuards,
 } from '@nestjs/common';
-import { OrderTableDto } from "./order.dto";
+import { OrderTableDto } from './order.dto';
 import { SocketOrderGateway } from './../socket_order/socket_order.gateway';
 import { ApiTags } from '@nestjs/swagger';
 import { OrderService } from './order.service';
+import {
+  CheckAdminGuard,
+  CheckNotExpiresTokenGuard,
+} from 'src/auth/auth.guard';
 
 @ApiTags('Order')
 @Controller('order')
@@ -32,13 +38,22 @@ export class OrderController {
   }
 
   @Get('get-order-tables/:table_id')
-  getOrderTableTables(@Param('table_id') table_id: string,) {
-    return this.orderService.getOrderTableTables({table_id});
+  getOrderTableTables(@Param('table_id') table_id: string) {
+    return this.orderService.getOrderTableTables({ table_id });
+  }
+
+  @Get('get-status-table/:table_id')
+  getStatusTable(@Param('table_id') table_id: string) {
+    return this.orderService.getStatusTable({ table_id });
   }
 
   @Post('order-table/:table_id')
+  @UseGuards(CheckAdminGuard)
+  @UseGuards(CheckNotExpiresTokenGuard)
   getOrderTable(
     @Param('table_id') table_id: string,
+    @Query('token') token: string,
+
     @Body() body: OrderTableDto,
   ) {
     this.eventsGateway.updateOrders();
@@ -47,32 +62,52 @@ export class OrderController {
   }
 
   @Post('create-table/:table_number')
-  createTable(@Param('table_number', ParseIntPipe) table_number: number) {
+  @UseGuards(CheckAdminGuard)
+  @UseGuards(CheckNotExpiresTokenGuard)
+  createTable(
+    @Param('table_number', ParseIntPipe) table_number: number,
+    @Query('token') token: string,
+  ) {
     return this.orderService.createTable({ table_number });
   }
 
   @Delete('delete-table/:table_id')
-  deleteTable(@Param('table_id') table_id: string) {
+  @UseGuards(CheckAdminGuard)
+  @UseGuards(CheckNotExpiresTokenGuard)
+  deleteTable(
+    @Param('table_id') table_id: string,
+    @Query('token') token: string,
+  ) {
     return this.orderService.deleteTable({ table_id });
   }
 
-  @Get('get-status-table/:table_id')
-  getStatusTable(@Param('table_id') table_id: string) {
-    return this.orderService.getStatusTable({ table_id });
-  }
-
   @Post('accept-status-table/:table_id')
-  acceptStatusTable(@Param('table_id') table_id: string) {
+  @UseGuards(CheckAdminGuard)
+  @UseGuards(CheckNotExpiresTokenGuard)
+  acceptStatusTable(
+    @Param('table_id') table_id: string,
+    @Query('token') token: string,
+  ) {
     return this.orderService.acceptStatusTable({ table_id });
   }
 
   @Delete('delete-status-table/:table_id')
-  deleteStatusTable(@Param('table_id') table_id: string) {
+  @UseGuards(CheckAdminGuard)
+  @UseGuards(CheckNotExpiresTokenGuard)
+  deleteStatusTable(
+    @Param('table_id') table_id: string,
+    @Query('token') token: string,
+  ) {
     return this.orderService.deleteStatusTable({ table_id });
   }
 
   @Put('editable-status-table/:table_id')
-  editableStatusTable(@Param('table_id') table_id: string) {
+  @UseGuards(CheckAdminGuard)
+  @UseGuards(CheckNotExpiresTokenGuard)
+  editableStatusTable(
+    @Param('table_id') table_id: string,
+    @Query('token') token: string,
+  ) {
     return this.orderService.editableStatusTable({ table_id });
   }
 }
