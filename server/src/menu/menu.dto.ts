@@ -1,5 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 
+export class UploadFileDto {
+  @ApiProperty({ type: 'string', format: 'binary' })
+  file: any;
+}
+
 export class AddCategoryMenuDto {
   @ApiProperty({ type: String, default: '' })
   category: string;
@@ -36,9 +41,3 @@ export class AddProductMenuDto {
   @ApiProperty({ type: String, default: '' })
   src: string;
 }
-
-export class UploadFileDto {
-  @ApiProperty({ type: 'string', format: 'binary' })
-  file: any;
-}
-
