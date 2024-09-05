@@ -83,6 +83,16 @@ export class AuthService {
     };
   }
 
+  async signupPassword({
+    national_code,
+    phone,
+    password,
+  }: {
+    national_code: string;
+    phone: string;
+    password: string;
+  }) {}
+
   async loginPassword({
     national_code,
     phone,
@@ -111,6 +121,28 @@ export class AuthService {
       return { login: true, access_token, refresh_token };
     } else {
       return { login: false };
+    }
+  }
+
+  async resetPassword({
+    national_code,
+    phone,
+    new_password,
+  }: {
+    national_code: string;
+    phone: string;
+    new_password: string;
+  }) {
+    const key = this.configService.get('App.token_hash_password');
+    const hashPass = hashPassword(new_password, key);
+    try {
+      await this.userRepository.update(
+        { phone, national_code },
+        { password: hashPass },
+      );
+      return { reset: true };
+    } catch (error) {
+      return { reset: false };
     }
   }
 
