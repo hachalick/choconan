@@ -6,6 +6,7 @@ import { ConfigService } from '@nestjs/config';
 import { configSwagger } from './modules/config/swaagger';
 import { SwaggerModule } from '@nestjs/swagger';
 import { callBackListener } from './modules/utils/callBack.main';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -17,6 +18,7 @@ async function bootstrap() {
   const port = configService.get('App.PORT_SERVER');
   const document = SwaggerModule.createDocument(app, configSwagger);
   SwaggerModule.setup('api/swagger', app, document);
+  app.useGlobalPipes(new ValidationPipe());
   await app.listen(port, () => callBackListener(port));
 }
 bootstrap();
