@@ -1,4 +1,3 @@
-import { UploadFileDto } from './menu.dto';
 import {
   Body,
   Controller,
@@ -10,45 +9,25 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  Query,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { AddProductMenuDto } from './menu.dto';
-import { AddCategoryMenuDto } from './menu.dto';
 import { MenuService } from './menu.service';
 import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
+import {
+  AddCategoryMenuDto,
+  AddProductMenuDto,
+  UploadFileDto,
+} from './menu.dto';
+import { CheckAdminGuard, CheckNotExpiresTokenGuard } from 'src/auth/auth.guard';
 
 @ApiTags('Menu')
 @Controller('menu')
 export class MenuController {
   constructor(private readonly menuService: MenuService) {}
-
-  @Post('upload-file-excel-menu')
-  @UseInterceptors(FileInterceptor('file'))
-  @ApiConsumes('multipart/form-data')
-  @ApiBody({
-    description: 'فایل اکسل برای آپلود',
-    type: UploadFileDto,
-  })
-  uploadFileExcel(
-    @UploadedFile(
-      new ParseFilePipeBuilder()
-        .addFileTypeValidator({
-          fileType:
-            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        })
-        .addMaxSizeValidator({
-          maxSize: 1024 * 1500,
-        })
-        .build({
-          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
-        }),
-    )
-    file: Express.Multer.File,
-  ) {
-    return this.menuService.uploadFileExcel({ file });
-  }
 
   @Get('get-menu')
   getAllMenu() {
@@ -76,29 +55,78 @@ export class MenuController {
     return this.menuService.searchProductMenu({ query });
   }
 
+  @Post('upload-file-excel-menu')
+  @UseGuards(CheckAdminGuard)
+  @UseGuards(CheckNotExpiresTokenGuard)
+  @UseInterceptors(FileInterceptor('file'))
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    description: 'فایل اکسل برای آپلود',
+    type: UploadFileDto,
+  })
+  uploadFileExcel(
+    @Query('token') token: string,
+    @UploadedFile(
+      new ParseFilePipeBuilder()
+        .addFileTypeValidator({
+          fileType:
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        })
+        .addMaxSizeValidator({
+          maxSize: 1024 * 1500,
+        })
+        .build({
+          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+        }),
+    )
+    file: Express.Multer.File,
+  ) {
+    return this.menuService.uploadFileExcel({ file });
+  }
+
   @Post('add-category-menu')
-  addCategoryMenu(@Body() body: AddCategoryMenuDto) {
+  @UseGuards(CheckAdminGuard)
+  @UseGuards(CheckNotExpiresTokenGuard)
+  addCategoryMenu(
+    @Query('token') token: string,
+    @Body() body: AddCategoryMenuDto,
+  ) {
     const { category, icon } = body;
     return this.menuService.addCategoryMenu({ category, icon });
   }
 
   @Put('update-category-menu/:category_id')
+  @UseGuards(CheckAdminGuard)
+  @UseGuards(CheckNotExpiresTokenGuard)
   updateCategoryMenu(
     @Param('category_id') category_id: string,
+    @Query('token') token: string,
     @Body() body: AddCategoryMenuDto,
   ) {
     const { category, icon } = body;
-    return this.menuService.updateCategoryMenu({ category, category_id, icon });
+    return this.menuService.updateCategoryMenu({
+      category,
+      category_id,
+      icon,
+    });
   }
 
   @Delete('delete-category-menu/:category_id')
-  deleteCategoryMenu(@Param('category_id') category_id: string) {
+  @UseGuards(CheckAdminGuard)
+  @UseGuards(CheckNotExpiresTokenGuard)
+  deleteCategoryMenu(
+    @Param('category_id') category_id: string,
+    @Query('token') token: string,
+  ) {
     return this.menuService.deleteCategoryMenu({ category_id });
   }
 
   @Post('add-product-menu/:category_id')
+  @UseGuards(CheckAdminGuard)
+  @UseGuards(CheckNotExpiresTokenGuard)
   addProductMenu(
     @Param('category_id') category_id: string,
+    @Query('token') token: string,
     @Body() body: AddProductMenuDto,
   ) {
     const {
@@ -127,8 +155,11 @@ export class MenuController {
   }
 
   @Put('update-product-menu/:product_id')
+  @UseGuards(CheckAdminGuard)
+  @UseGuards(CheckNotExpiresTokenGuard)
   updateProductMenu(
     @Param('product_id') product_id: string,
+    @Query('token') token: string,
     @Body() body: AddProductMenuDto,
   ) {
     const {
@@ -157,7 +188,12 @@ export class MenuController {
   }
 
   @Delete('delete-product-menu/:product_id')
-  deleteProductMenu(@Param('product_id') product_id: string) {
+  @UseGuards(CheckAdminGuard)
+  @UseGuards(CheckNotExpiresTokenGuard)
+  deleteProductMenu(
+    @Param('product_id') product_id: string,
+    @Query('token') token: string,
+  ) {
     return this.menuService.deleteProductMenu({ product_id });
   }
 }
