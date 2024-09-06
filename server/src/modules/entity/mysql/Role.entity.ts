@@ -1,9 +1,5 @@
-import {
-  Column,
-  Entity,
-  Generated,
-  PrimaryColumn,
-} from 'typeorm';
+import { Column, Entity, Generated, OneToMany, PrimaryColumn } from 'typeorm';
+import { RoleUserEntity } from './RoleUser.entity';
 
 @Entity()
 export class RoleEntity {
@@ -20,4 +16,9 @@ export class RoleEntity {
     charset: 'utf8',
   })
   role_name: string;
+
+  @OneToMany(() => RoleUserEntity, (rolesUser) => rolesUser.user, {
+    onDelete: 'CASCADE',
+  })
+  role_user: RoleUserEntity[];
 }
