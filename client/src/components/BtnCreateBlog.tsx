@@ -8,7 +8,8 @@ export default function BtnCreateBlog() {
   const router = useRouter();
 
   const onClickCreateBlog = async () => {
-    const { create, id } = await fetchCreateBlogPanel();
+    const access_token = sessionStorage.getItem("access_token") || "";
+    const { create, id } = await fetchCreateBlogPanel({ access_token });
     if (create) router.push(`/account/blog/${id}`);
   };
 
