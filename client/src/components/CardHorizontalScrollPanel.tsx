@@ -12,6 +12,7 @@ function CardHorizontalScrollPanel({ data }: { data: TIdProductMenu }) {
   const [timer, setTimer] = useState<NodeJS.Timeout>();
 
   useEffect(() => {
+    const access_token = sessionStorage.getItem("access_token") || "";
     clearTimeout(timer);
     setStatusChange(false);
     statusChange && setStatusCloud(false);
@@ -29,6 +30,7 @@ function CardHorizontalScrollPanel({ data }: { data: TIdProductMenu }) {
             price: dataCard.price,
             src: dataCard.src,
             waiting: dataCard.waiting,
+            access_token,
           });
           setStatusChange(update);
           setStatusCloud(update);
