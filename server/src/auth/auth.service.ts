@@ -22,38 +22,29 @@ export class AuthService {
     private readonly roleUserRepository: Repository<RoleUserEntity>,
   ) {}
 
-  async setDefaultDb() {
-    const roleAdmin = await this.roleRepository.findOne({
-      where: { role_name: ERoleUser.ADMIN },
+  async createRole(role_name: string) {
+    const exiRoleUser = await this.roleRepository.findOne({
+      where: { role_name },
     });
-    if (!roleAdmin) {
-      const role = this.roleRepository.create({
-        role_name: ERoleUser.ADMIN,
+    if (!exiRoleUser) {
+      const newRole = this.roleRepository.create({
+        role_name,
       });
-      await this.roleRepository.save(role);
+      await this.roleRepository.save(newRole);
     }
-    const roleBlogger = await this.roleRepository.findOne({
-      where: { role_name: ERoleUser.BLOGGER },
-    });
-    if (!roleBlogger) {
-      const role = this.roleRepository.create({
-        role_name: ERoleUser.BLOGGER,
-      });
-      await this.roleRepository.save(role);
-    }
-    const roleWaiter = await this.roleRepository.findOne({
-      where: { role_name: ERoleUser.WAITER },
-    });
-    if (!roleWaiter) {
-      const role = this.roleRepository.create({
-        role_name: ERoleUser.WAITER,
-      });
-      await this.roleRepository.save(role);
-    }
-    const key = this.configService.get('App.token_hash_password');
-    const newPass = hashPassword('1234', key);
-    const phone = '9353790881';
-    const national_code = '98';
+  }
+
+  async createUser({
+    password,
+    national_code,
+    phone,
+    role_name,
+  }: {
+    password: string;
+    national_code: string;
+    phone: string;
+    role_name: string;
+  }) {
     const exiAccount = await this.userRepository.findOne({
       where: {
         phone,
@@ -61,26 +52,73 @@ export class AuthService {
       },
     });
     if (!exiAccount) {
-      // create a account admin
+      // create a account
       const newAccount = this.userRepository.create({
-        password: newPass,
+        password,
         phone,
         national_code,
       });
       const account = await this.userRepository.save(newAccount);
-      // add role admin
-      const roleAdmin = await this.roleRepository.findOne({
-        where: { role_name: ERoleUser.ADMIN },
-      });
-      const newRoleUser = await this.roleUserRepository.create({
+    }
+    const account = await this.userRepository.findOne({
+      where: { phone, national_code },
+    });
+    // add role
+    const role = await this.roleRepository.findOne({
+      where: { role_name },
+    });
+    const exiRoleUser = await this.roleUserRepository.findOne({
+      where: { user: account, role: role },
+    });
+    if (!exiRoleUser) {
+      const newRoleUser = this.roleUserRepository.create({
         user: account,
-        role: roleAdmin,
+        role: role,
       });
       await this.roleUserRepository.save(newRoleUser);
     }
+  }
+
+  async setDefaultDb() {
+    const key = this.configService.get('App.token_hash_password');
+    const password = hashPassword('1234', key);
+    const national_code = '98';
+    await this.createRole(ERoleUser.ADMIN);
+    await this.createRole(ERoleUser.BLOGGER);
+    await this.createRole(ERoleUser.WAITER);
+    await this.createUser({
+      national_code,
+      password,
+      phone: '9353790881',
+      role_name: ERoleUser.ADMIN,
+    });
+    await this.createUser({
+      national_code,
+      password,
+      phone: '9123790881',
+      role_name: ERoleUser.ADMIN,
+    });
+    await this.createUser({
+      national_code,
+      password,
+      phone: '9127017624',
+      role_name: ERoleUser.WAITER,
+    });
     return {
       initial: true,
     };
+  }
+
+  async getRole({ token }: { token: string }) {
+    const prop = await this.jwtService.verifyAccessToken(token);
+    const national_code = prop.national_code as string;
+    const phone = prop.phone as string;
+    const account = await this.userRepository.findOne({
+      where: { phone, national_code },
+      relations: { rolesUser: { role: true } },
+    });
+    const roles = account.rolesUser.map((role) => role.role.role_name);
+    return roles;
   }
 
   async signupPassword({
@@ -124,25 +162,26 @@ export class AuthService {
     }
   }
 
-  async resetPassword({
-    national_code,
-    phone,
+  async updatePassword({
     new_password,
+    token,
   }: {
-    national_code: string;
-    phone: string;
     new_password: string;
+    token: string;
   }) {
     const key = this.configService.get('App.token_hash_password');
     const hashPass = hashPassword(new_password, key);
     try {
+      const prop = await this.jwtService.verifyAccessToken(token);
+      const national_code = prop.national_code as string | undefined;
+      const phone = prop.phone as string | undefined;
       await this.userRepository.update(
         { phone, national_code },
         { password: hashPass },
       );
-      return { reset: true };
+      return { update: true };
     } catch (error) {
-      return { reset: false };
+      return { update: false };
     }
   }
 
