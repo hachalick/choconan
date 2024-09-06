@@ -29,5 +29,13 @@ export enum ERoute {
   CREATE_BLOG = "/blog/create-blog",
   UPDATE_BLOG = "/blog/update-blog",
   DELETE_BLOG = "/blog/delete-blog",
-  SET_PUBLISH_BLOG = "/blog/set-publish-blog"
+  SET_PUBLISH_BLOG = "/blog/set-publish-blog",
+  // auth
+  SIGN_UP = "/auth/signup",
+  GET_ROLE = "/auth/get-role",
+  LOGIN_PASSWORD = "/auth/login-password",
+  REFRESH_TOKEN = "/auth/refresh-token",
+  UPDATE_PASSWORD = "/auth/update-password",
+  // user
+  GET_ACCOUNT = "/user/account",
 }
