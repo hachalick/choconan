@@ -29,6 +29,16 @@
       #a1a1aa
     );
   }
+
+  .no-spinner::-webkit-inner-spin-button,
+  .no-spinner::-webkit-outer-spin-button {
+    @apply appearance-none;
+    margin: 0;
+  }
+  
+  .no-spinner {
+    @apply [appearance:textfield];
+  }
 }
 
 :root {
