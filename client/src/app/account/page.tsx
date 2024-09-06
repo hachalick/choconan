@@ -1,19 +1,29 @@
 "use client";
-import AdminPanel from "@/layout/AdminPanel";
-import LoginPanel from "@/layout/LoginPanel";
+import { ERoleUser } from "@/enum/role-user.enum";
+import AdminPanel from "@/layout/Panel/AdminPanel";
+import LoginPanel from "@/layout/Panel/LoginPanel";
+import UserPanel from "@/layout/Panel/UserPanel";
+import WaiterPanel from "@/layout/Panel/WaiterPanel";
+import { fetchGetRole } from "@/utils/FetchData";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 function AccountPanel() {
-  const [state, setState] = useState(2);
+  const [state, setState] = useState(0);
 
   useEffect(() => {
-    const access_token = localStorage.getItem("lastname");
-    // if (access_token) {
-    //   setState(2);
-    // } else {
-    //   setState(1);
-    // }
+    const access_token = sessionStorage.getItem("access_token");
+    const fetchRoles = async () => {
+      if (access_token) {
+        const roles = await fetchGetRole({ access_token });
+        if (roles.includes(ERoleUser.ADMIN)) setState(2);
+        else if (roles.includes(ERoleUser.WAITER)) setState(3);
+        else setState(4);
+      } else {
+        setState(1);
+      }
+    };
+    fetchRoles();
   }, []);
 
   if (state === 0)
@@ -31,7 +41,8 @@ function AccountPanel() {
     );
   else if (state == 1) return <LoginPanel />;
   else if (state == 2) return <AdminPanel />;
-  else if (state == 3) return <>user</>;
+  else if (state == 3) return <WaiterPanel />;
+  else if (state == 4) return <UserPanel />;
 }
 
 export default AccountPanel;
