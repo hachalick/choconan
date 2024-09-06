@@ -17,6 +17,7 @@ import { OrderService } from './order.service';
 import {
   CheckAdminGuard,
   CheckNotExpiresTokenGuard,
+  CheckWaiterGuard,
 } from 'src/auth/auth.guard';
 
 @ApiTags('Order')
@@ -48,11 +49,8 @@ export class OrderController {
   }
 
   @Post('order-table/:table_id')
-  @UseGuards(CheckAdminGuard)
-  @UseGuards(CheckNotExpiresTokenGuard)
   getOrderTable(
     @Param('table_id') table_id: string,
-    @Query('token') token: string,
 
     @Body() body: OrderTableDto,
   ) {
@@ -82,7 +80,7 @@ export class OrderController {
   }
 
   @Post('accept-status-table/:table_id')
-  @UseGuards(CheckAdminGuard)
+  @UseGuards(CheckWaiterGuard)
   @UseGuards(CheckNotExpiresTokenGuard)
   acceptStatusTable(
     @Param('table_id') table_id: string,
@@ -92,7 +90,7 @@ export class OrderController {
   }
 
   @Delete('delete-status-table/:table_id')
-  @UseGuards(CheckAdminGuard)
+  @UseGuards(CheckWaiterGuard)
   @UseGuards(CheckNotExpiresTokenGuard)
   deleteStatusTable(
     @Param('table_id') table_id: string,
@@ -102,7 +100,7 @@ export class OrderController {
   }
 
   @Put('editable-status-table/:table_id')
-  @UseGuards(CheckAdminGuard)
+  @UseGuards(CheckWaiterGuard)
   @UseGuards(CheckNotExpiresTokenGuard)
   editableStatusTable(
     @Param('table_id') table_id: string,
