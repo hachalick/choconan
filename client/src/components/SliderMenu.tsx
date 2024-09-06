@@ -8,7 +8,7 @@ import { FiShoppingBag } from "react-icons/fi";
 import { GoHome } from "react-icons/go";
 import { GrWorkshop } from "react-icons/gr";
 import { IoCafeOutline, IoInformationCircleOutline } from "react-icons/io5";
-import { MdOutlineRestaurantMenu } from "react-icons/md";
+import { MdOutlineAccountCircle, MdOutlineRestaurantMenu } from "react-icons/md";
 import { PiPhoneDisconnectBold } from "react-icons/pi";
 import { RiMenu4Fill } from "react-icons/ri";
 import { TbLogs } from "react-icons/tb";
@@ -107,6 +107,11 @@ function SliderMenu() {
             <li onClick={() => setOpen((val) => !val)}>
               <Link href="/questions" className="flex">
                 <FaQuora size={25} className="w-8 ml-1" /> پرسش و پاسخ
+              </Link>
+            </li>
+            <li onClick={() => setOpen((val) => !val)}>
+              <Link href="/account" className="flex">
+                <MdOutlineAccountCircle size={25} className="w-8 ml-1" /> حساب کاربری
               </Link>
             </li>
             <li onClick={() => setOpen((val) => !val)}>
