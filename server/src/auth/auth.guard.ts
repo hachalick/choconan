@@ -91,27 +91,22 @@ export class ResetPasswordGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const {
-      national_code,
-      phone,
-      new_password,
       old_password,
+      new_password,
     }: {
-      national_code: string;
-      phone: string;
       old_password: string;
       new_password: string;
     } = request.body;
+    const { token }: { token?: string } = request.query;
+    if (new_password === undefined && old_password === undefined) {
+      return true;
+    }
+    const prop = await this.jwtService.verifyAccessToken(token);
+    const national_code = prop.national_code as string | undefined;
+    const phone = prop.phone as string | undefined;
     const find = await this.userRepository.findOne({
       where: { national_code, phone },
     });
-    if (
-      national_code === undefined &&
-      phone === undefined &&
-      new_password === undefined &&
-      old_password === undefined
-    ) {
-      return true;
-    }
     if (!find) {
       throw new HttpException(
         EMessageHttpException.USER_NOT_FOUND,
@@ -251,6 +246,85 @@ export class CheckAdminGuard implements CanActivate {
           HttpStatus.BAD_REQUEST,
         );
       }
+    }
+    return true;
+  }
+}
+
+@Injectable()
+export class CheckWaiterGuard implements CanActivate {
+  constructor(
+    private readonly jwtService: JwtService,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
+  ) {}
+
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const request = context.switchToHttp().getRequest();
+    const { token }: { token?: string } = request.query;
+    const prop = await this.jwtService.verifyAccessToken(token);
+    const national_code = prop.national_code as string | undefined;
+    const phone = prop.phone as string | undefined;
+    if (!national_code && !phone) {
+      throw new HttpException(
+        EMessageHttpException.LOGIN_AGAIN,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    const user = await this.userRepository.findOne({
+      where: { phone, national_code },
+      relations: { rolesUser: { role: true } },
+    });
+    if (!user) {
+      throw new HttpException(
+        EMessageHttpException.USER_NOT_FOUND,
+        HttpStatus.BAD_REQUEST,
+      );
+    } else {
+      const roleUser = user.rolesUser.find(
+        (a) =>
+          a.role.role_name === ERoleUser.ADMIN ||
+          a.role.role_name === ERoleUser.WAITER,
+      );
+      if (!roleUser) {
+        throw new HttpException(
+          EMessageHttpException.ACCESS_DENIED,
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+    }
+    return true;
+  }
+}
+
+@Injectable()
+export class CheckExistAccountGuard implements CanActivate {
+  constructor(
+    private readonly jwtService: JwtService,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
+  ) {}
+
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const request = context.switchToHttp().getRequest();
+    const { token }: { token?: string } = request.query;
+    const prop = await this.jwtService.verifyAccessToken(token);
+    const national_code = prop.national_code as string | undefined;
+    const phone = prop.phone as string | undefined;
+    if (!national_code && !phone) {
+      throw new HttpException(
+        EMessageHttpException.LOGIN_AGAIN,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    const user = await this.userRepository.findOne({
+      where: { phone, national_code },
+    });
+    if (!user) {
+      throw new HttpException(
+        EMessageHttpException.USER_NOT_FOUND,
+        HttpStatus.BAD_REQUEST,
+      );
     }
     return true;
   }
