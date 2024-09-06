@@ -5,12 +5,14 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiTags } from '@nestjs/swagger';
 import { LoginPasswordDto, resetPasswordDto, SignupDto } from './auth.dto';
 import {
+  CheckNotExpiresTokenGuard,
   LoginGuard,
   RefreshTokenGuard,
   ResetPasswordGuard,
@@ -25,6 +27,11 @@ export class AuthController {
   @Get('set-default')
   setDefaultDg() {
     return this.authService.setDefaultDb();
+  }
+
+  @Get('get-role/:token')
+  getRole(@Param('token') token: string) {
+    return this.authService.getRole({ token });
   }
 
   @Post('signup')
@@ -47,14 +54,14 @@ export class AuthController {
     return this.authService.refreshToken({ token });
   }
 
-  @Put('reset-password')
+  @Put('update-password')
   @UseGuards(ResetPasswordGuard)
-  resetPassword(@Body() body: resetPasswordDto) {
-    const { new_password, national_code, phone } = body;
-    return this.authService.resetPassword({
+  @UseGuards(CheckNotExpiresTokenGuard)
+  updatePassword(@Query('token') token: string, @Body() body: resetPasswordDto) {
+    const { new_password } = body;
+    return this.authService.updatePassword({
       new_password,
-      national_code,
-      phone,
+      token,
     });
   }
 }
