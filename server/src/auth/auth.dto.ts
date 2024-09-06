@@ -38,17 +38,6 @@ export class LoginPasswordDto {
 }
 
 export class resetPasswordDto {
-  @ApiProperty({ default: '98', type: 'string', minLength: 1, maxLength: 3 })
-  @IsString()
-  @MaxLength(3)
-  @MinLength(1)
-  national_code: string;
-
-  @ApiProperty({ default: '9XXXXXXXXX', minLength: 10, maxLength: 10 })
-  @IsString()
-  @Length(10)
-  phone: string;
-
   @ApiProperty({ default: 'asdf', minLength: 4 })
   @IsString()
   @MinLength(4)
