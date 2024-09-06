@@ -77,7 +77,11 @@ export default function FactorPresent() {
         confirmButtonText: "تلاش مجدد",
       });
     } else {
-      const statusTable = await fetchStatusTable({ table_id: val });
+      const access_token = sessionStorage.getItem("access_token") || "";
+      const statusTable = await fetchStatusTable({
+        table_id: val,
+        access_token,
+      });
       if (statusTable.can_order) {
         Swal.fire({
           title: "مشکل داریم !",
