@@ -71,3 +71,35 @@ type TIdBlogs = TIdBlog[];
 type TGetIdBlog = TIdBlog & { create_at: Date; update_at: Date };
 
 type TGetIdBlogs = TGetIdBlog[];
+
+type TSign = {
+  national_code: string;
+  phone: string;
+  password: string;
+};
+
+type TLogin =
+  | {
+      login: false;
+    }
+  | {
+      login: true;
+      access_token: string;
+      refresh_token: string;
+    };
+
+type TRefresh =
+  | {
+      refresh: false;
+    }
+  | {
+      refresh: true;
+      access_token: string;
+      refresh_token: string;
+    };
+
+type TProfile = {
+  name: string;
+  family: string;
+  profile: string;
+};
