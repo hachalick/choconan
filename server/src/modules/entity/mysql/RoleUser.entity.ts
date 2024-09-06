@@ -20,9 +20,8 @@ export class RoleUserEntity {
   })
   user: UserEntity;
 
-  @OneToOne(() => RoleEntity, {
+  @ManyToOne(() => RoleEntity, (role) => role.role_user, {
     onDelete: 'CASCADE',
   })
-  @JoinColumn()
   role: RoleEntity;
 }
