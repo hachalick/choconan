@@ -1,27 +1,34 @@
 "use client";
+import { RefetchContext } from "@/layout/Panel/OrdersPanel";
 import {
   fetchAcceptStatusTable,
   fetchDeleteStatusTable,
   fetchEditableStatusTable,
 } from "@/utils/FetchData";
 import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
 import { BsCheckSquare, BsDashSquare } from "react-icons/bs";
 import { CiEdit } from "react-icons/ci";
 import { MdOutlinePrint } from "react-icons/md";
 
 function AcceptDeleteOrder({ table_id }: { table_id: string }) {
+  const setRefetch = useContext<TRefetchContextType>(RefetchContext);
   const onClickAccept = async () => {
-    await fetchAcceptStatusTable({ table_id });
+    const access_token = sessionStorage.getItem("access_token") || "";
+    await fetchAcceptStatusTable({ table_id, access_token });
   };
 
   const onClickEditable = async () => {
-    await fetchEditableStatusTable({ table_id });
+    const access_token = sessionStorage.getItem("access_token") || "";
+    await fetchEditableStatusTable({ table_id, access_token });
   };
 
   const onClickDelete = async () => {
-    await fetchDeleteStatusTable({ table_id });
-    location.reload();
+    const access_token = sessionStorage.getItem("access_token") || "";
+    await fetchDeleteStatusTable({ table_id, access_token });
+    if (setRefetch !== undefined) {
+      setRefetch(true);
+    }
   };
 
   return (
