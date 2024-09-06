@@ -28,6 +28,7 @@ function HorizontalScrollPanel({
   const [timer, setTimer] = useState<NodeJS.Timeout>();
 
   useEffect(() => {
+    const access_token = sessionStorage.getItem("access_token") || "";
     clearTimeout(timer);
     setStatusChange(false);
     statusChange && setStatusCloud(false);
@@ -38,6 +39,7 @@ function HorizontalScrollPanel({
             category: data.category,
             category_id: data.category_product_id,
             icon: data.icon,
+            access_token,
           });
           setStatusChange(update);
           setStatusCloud(update);
