@@ -10,6 +10,7 @@ import { BlogModule } from './blog/blog.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { AdminModule } from './admin/admin.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { AdminModule } from './admin/admin.module';
     BlogModule,
     OrderModule,
     MenuModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
