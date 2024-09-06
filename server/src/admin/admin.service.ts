@@ -13,5 +13,4 @@ export class AdminService {
     private readonly productMenuRepository: Repository<ProductMenuEntity>,
   ) {}
 
-
 }
