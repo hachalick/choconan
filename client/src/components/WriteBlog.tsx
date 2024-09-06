@@ -46,11 +46,13 @@ function WriteBlog({ blog_id }: { blog_id: string }) {
   }, []);
 
   useEffect(() => {
+    const access_token = sessionStorage.getItem("access_token") || "";
     clearTimeout(timer);
     setSaveCloud(false);
     return setTimer(
       setTimeout(async () => {
         await fetchUpdateBlogPanel({
+          access_token,
           blog_id,
           blog,
           meta_title: data.meta_title,
